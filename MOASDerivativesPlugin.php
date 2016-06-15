@@ -11,8 +11,9 @@
 class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array(
-        'initialize',
-        'after_save_record'
+        'after_delete_record',
+        'after_save_record',
+        'initialize'
     );
 
     public function hookInitialize()
@@ -23,6 +24,14 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
         if (!$storage->getAdapter() instanceof MOAS_Storage_Adapter_Filesystem) {
             throw new RuntimeException('The MOAS Derivatives plugin has been enabled without the ' .
                 'MOAS_Storage_Adapter_Filesystem storage adapter being configured in the config.ini');
+        }
+    }
+
+    public function hookAfterDeleteRecord($args)
+    {
+        if ($args['record'] instanceof \File) {
+            $file = new MOAS_File($args['record']);
+            $file->delete();
         }
     }
 

@@ -29,6 +29,21 @@ class MOAS_File
     {
         $this->_file = $file;
     }
+    
+    public function delete()
+    {
+        $storage = $this->getStorage();
+        $files = array();
+        if ($this->getProperty('has_derivative_image') === 1) {
+            $types = self::$_derivatives;
+            foreach($types as $type => $path) {
+                $files[] = $this->getStoragePath($type);
+            }
+        }
+        foreach($files as $file) {
+            $storage->delete($file);
+        }
+    }
 
     public function extractMetadata()
     {
@@ -43,6 +58,10 @@ class MOAS_File
      */
     public function createDerivatives()
     {
+        if ($this->getProperty('has_derivative_image') === 1) {
+            return false;
+        }
+
         if (!Zend_Registry::isRegistered('file_derivative_creator')) {
             return false;
         }
