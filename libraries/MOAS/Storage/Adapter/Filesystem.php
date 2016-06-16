@@ -33,7 +33,7 @@ class MOAS_Storage_Adapter_Filesystem extends Omeka_Storage_Adapter_Filesystem
         $status = $this->_copy($this->_getAbsPath($source),
             $dest);
 
-        if(!$status) {
+        if (!$status) {
             throw new Omeka_Storage_Exception('Unable to copy file.');
         }
     }
