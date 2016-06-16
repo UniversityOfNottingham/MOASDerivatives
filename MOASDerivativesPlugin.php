@@ -8,6 +8,8 @@
  * @author      Adam Cooper <adam.cooper@nottingham.ac.uk>
  */
 
+use \File as Omeka_File;
+
 class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array(
@@ -29,7 +31,7 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookAfterDeleteRecord($args)
     {
-        if ($args['record'] instanceof \File) {
+        if ($args['record'] instanceof Omeka_File) {
             $file = new MOAS_File($args['record']);
             $file->delete();
         }
@@ -37,7 +39,7 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookAfterSaveRecord($args)
     {
-        if ($args['record'] instanceof \File) {
+        if ($args['record'] instanceof Omeka_File) {
             if ($args['insert']) {
                 $dispatcher = Zend_Registry::get('job_dispatcher');
                 $dispatcher->setQueueName('uploads');
