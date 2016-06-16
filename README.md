@@ -1,6 +1,7 @@
 MOASDerivatives
 ===============
-
+[![Release](https://img.shields.io/badge/stable-v0.1.0-blue.svg)](https://github.com/UniversityOfNottingham/MOASDerivatives/releases/latest)
+[![License](https://img.shields.io/badge/licence-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/badges/build.png?b=master)](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/?branch=master)
 
