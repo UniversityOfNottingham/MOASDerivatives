@@ -18,7 +18,7 @@ class MOAS_File
     /** @var \File */
     protected $_file;
     
-    protected static $_derivatives = array (
+    protected static $_derivatives = array(
         'header' => 1500
     );
 
@@ -36,11 +36,11 @@ class MOAS_File
         $files = array();
         if ($this->getProperty('has_derivative_image') === 1) {
             $types = self::$_derivatives;
-            foreach($types as $type => $path) {
+            foreach ($types as $type => $path) {
                 $files[] = $this->getStoragePath($type);
             }
         }
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $storage->delete($file);
         }
     }
@@ -67,7 +67,7 @@ class MOAS_File
         }
         $creator = Zend_Registry::get('file_derivative_creator');
         
-        foreach (self::$_derivatives as $type => $size ) {
+        foreach (self::$_derivatives as $type => $size) {
             $creator->addDerivative($type, $size);
         }
 
@@ -85,7 +85,7 @@ class MOAS_File
         // cleanup
         $storage->delete($this->getPath('original'));
 
-        foreach (self::$_derivatives as $type => $size ) {
+        foreach (self::$_derivatives as $type => $size) {
             $adapter->registerSubDir($type);
             $storage->store($this->getPath($type), $this->getStoragePath($type));
         }
