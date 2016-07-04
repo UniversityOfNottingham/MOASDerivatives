@@ -15,7 +15,8 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
     protected $_hooks = array(
         'after_delete_record',
         'after_save_record',
-        'initialize'
+        'initialize',
+        'uninstall_message'
     );
 
     public function hookInitialize()
@@ -24,7 +25,9 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
         $storage = Zend_Registry::get('storage');
 
         if (!$storage->getAdapter() instanceof MOAS_Storage_Adapter_Filesystem) {
-            throw new RuntimeException('The MOAS Derivatives plugin has been enabled without the ' .
+            /** @var $flashMessenger Omeka_Controller_Action_Helper_FlashMessenger */
+            $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+            $flashMessenger->addMessage('The MOAS Derivatives plugin has been enabled without the ' .
                 'MOAS_Storage_Adapter_Filesystem storage adapter being configured in the config.ini');
         }
     }
@@ -46,5 +49,15 @@ class MOASDerivativesPlugin extends Omeka_Plugin_AbstractPlugin
                 $dispatcher->send('MOAS_Job_FileProcessUpload', array('fileData' => $args['record']->toArray()));
             }
         }
+    }
+
+    /**
+     * Display the uninstall message.
+     */
+    public function hookUninstallMessage()
+    {
+        echo __('%sWarning%s: Uninstalling this plugin without removing the relevant configuration stanza in ' .
+            'your Omeka installations config.ini file %swill%s cause your site to become inoperable.%s',
+            '<p><strong>', '</strong>', '<strong>', '</strong>', '</p>');
     }
 }

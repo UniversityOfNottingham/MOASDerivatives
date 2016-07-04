@@ -15,10 +15,13 @@
  */
 class MOAS_File
 {
+    /** @var boolean */
+    public $has_derivative_image;
+
     /** @var \File */
     protected $_file;
     
-    protected static $_derivatives = array (
+    protected static $_derivatives = array(
         'header' => 1500
     );
 
@@ -36,11 +39,11 @@ class MOAS_File
         $files = array();
         if ($this->getProperty('has_derivative_image') === 1) {
             $types = self::$_derivatives;
-            foreach($types as $type => $path) {
+            foreach ($types as $type => $path) {
                 $files[] = $this->getStoragePath($type);
             }
         }
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $storage->delete($file);
         }
     }
@@ -58,36 +61,36 @@ class MOAS_File
      */
     public function createDerivatives()
     {
-        if ($this->getProperty('has_derivative_image') === 1) {
-            return false;
-        }
-
         if (!Zend_Registry::isRegistered('file_derivative_creator')) {
             return false;
         }
         $creator = Zend_Registry::get('file_derivative_creator');
         
-        foreach (self::$_derivatives as $type => $size ) {
+        foreach (self::$_derivatives as $type => $size) {
             $creator->addDerivative($type, $size);
         }
 
-        $creator->create($this->getPath('original'),
-            $this->_file->getDerivativeFilename(),
-            $this->_file->mime_type);
+        if ($creator->create($this->getPath('original'),
+                             $this->_file->getDerivativeFilename(),
+                             $this->_file->mime_type)) {
+            $this->has_derivative_image = 1;
+        }
     }
     
     public function storeFiles()
     {
-        $storage = $this->getStorage();
-        /** @var MOAS_Storage_Adapter_Filesystem $adapter */
-        $adapter = $storage->getAdapter();
-        
-        // cleanup
-        $storage->delete($this->getPath('original'));
+        if ($this->has_derivative_image) {
+            $storage = $this->getStorage();
+            /** @var MOAS_Storage_Adapter_Filesystem $adapter */
+            $adapter = $storage->getAdapter();
 
-        foreach (self::$_derivatives as $type => $size ) {
-            $adapter->registerSubDir($type);
-            $storage->store($this->getPath($type), $this->getStoragePath($type));
+            // cleanup
+            $storage->delete($this->getPath('original'));
+
+            foreach (self::$_derivatives as $type => $size) {
+                $adapter->registerSubDir($type);
+                $storage->store($this->getPath($type), $this->getStoragePath($type));
+            }
         }
     }
 
