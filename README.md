@@ -1,6 +1,6 @@
 MOASDerivatives
 ===============
-[![Release](https://img.shields.io/badge/stable-v1.0.0-blue.svg)](https://github.com/UniversityOfNottingham/MOASDerivatives/releases/latest)
+[![Release](https://img.shields.io/badge/stable-v1.0.1-blue.svg)](https://github.com/UniversityOfNottingham/MOASDerivatives/releases/latest)
 [![License](https://img.shields.io/badge/licence-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/badges/build.png?b=master)](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/UniversityOfNottingham/MOASDerivatives/?branch=master)
@@ -21,6 +21,6 @@ storage.adapter = "MOAS_Storage_Adapter_Filesystem"
 
 
 #####Note
-* Entering the configuration line into config.ini without enabling the plugin with break Omeka.
-* Enabling the plugin without entering the configuration line will break Omeka.
+* Entering the configuration line into config.ini without enabling the plugin will break Omeka.
+* Enabling the plugin without entering the configuration line will prompt you to add the configuration as soon as possible.
 * To this end your best bet is to enable the plugin first and then add the configuration directive.
