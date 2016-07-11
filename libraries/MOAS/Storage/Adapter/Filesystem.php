@@ -39,6 +39,26 @@ class MOAS_Storage_Adapter_Filesystem extends Omeka_Storage_Adapter_Filesystem
     }
 
     /**
+     * @param $path string The Omeka storage path to a file
+     * @return bool The file exists
+     */
+    public function isFile($path)
+    {
+        return is_file($this->_getAbsPath($path));
+    }
+
+    /**
+     * Get a local path for a "stored" file.
+     *
+     * @param string $path
+     * @return string Absolute filesystem path to file
+     */
+    public function getLocalPath($path)
+    {
+        return $this->_localDir . '/' . $path;
+    }
+
+    /**
      * @throws Omeka_Storage_Exception
      * @return boolean
      */
